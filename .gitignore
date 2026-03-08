@@ -7,3 +7,12 @@ docs/.vitepress/cache
 .vitepress/cache
 build
 game
+# BandTwine编译文件
+src/common/metadata.js
+src/common/story.compiled.js
+# 临时测试文件
+test-export-compatibility.js
+# 编辑器临时文件
+visual-editor/node_modules
+visual-editor/dist
+visual-editor/.vite
