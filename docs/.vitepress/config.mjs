@@ -53,6 +53,13 @@ export default defineConfig({
       },
 
       {
+        text: '可视化编辑器',
+        items: [
+          { text: '快速入门', link: '/visual-editor-quick-start' },
+          { text: '完整使用指南', link: '/visual-editor-guide' },
+        ]
+      },
+      {
         text: '参考手册',
         items: [
           { text: 'API 参考', link: '/api-reference' },
