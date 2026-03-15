@@ -1,5 +1,7 @@
 # BandTwine (结彩)
 
+> 📌 **本项目是 [OrPudding/VelaOS_BandTwine](https://github.com/OrPudding/VelaOS_BandTwine) 的 Fork**，添加了可视化节点编辑器功能。
+
 <div align="center">
   <img src="https://raw.githubusercontent.com/OrPudding/VelaOS_BandTwine/main/src/common/icon.png" alt="BandTwine Logo" width="150"/>
   <h1 align="center">BandTwine (结彩 )</h1>
@@ -9,6 +11,8 @@
         <p>轻量化引擎 · 深度叙事 · 多设备适配</p>
   <p align="center">
     <a href="https://velaos-bandtwine.pages.dev/"><strong>📚 完整文档 »</strong></a>
+    <span> · </span>
+    <a href="visual-editor/README.md"><strong>🎨 可视化编辑器 »</strong></a>
 
   </p>
 </div>
