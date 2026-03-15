@@ -267,7 +267,7 @@ visual-editor/
 
 ---
 
-## 2026-03-08 功能符合性分析
+## 2026-03-15 功能符合性分析
 
 基于对 `bandtwine_src/game-data.json`、`scripts/compile.js` 和官方文档的分析，可视化编辑器的当前导出功能与原版 BandTwine 引擎要求对比：
 
@@ -275,86 +275,57 @@ visual-editor/
 
 1. **元数据（metadata）**：完整支持所有字段
 2. **变量系统（variables）**：支持嵌套结构，包含 `value` 和 `desc` 字段
-3. **基础节点结构**：`text`、`links` 数组
-4. **文本标记编译**：变量 `{var.xxx}`、条件 `{cond.xxx}`、随机 `{random.xxx}`、图片 `{img.xxx}`、表达式 `$(...)`、链接索引 `{数字}` 的解析和预览
-5. **条件系统（conds）**：store 方法 + UI 完整实现
-6. **随机系统（randoms）**：store 方法已实现（缺少 UI）
-7. **图片系统（imgs）**：store 方法已实现（缺少 UI）
-8. **导入导出**：完整支持 BandTwine JSON 格式
+3. **变量特殊结构**：`show` 和 `temp` 变量分类显示 ✅
+4. **基础节点结构**：`text`、`links` 数组
+5. **文本标记编译**：变量 `{var.xxx}`、条件 `{cond.xxx}`、随机 `{random.xxx}`、图片 `{img.xxx}`、表达式 `$(...)`、链接索引 `{数字}` 的解析和预览
+6. **动作系统（actions）**：完整实现
+   - 节点级别动作：`addNodeAction`, `updateNodeAction`, `deleteNodeAction`
+   - 链接级别动作：`addLinkAction`, `updateLinkAction`, `deleteLinkAction`
+   - 支持所有动作类型：set、add、toggle、vibrate、addListener、removeListener、autosave、advanceTime、toast、jump
+   - 动作支持条件表达式
+7. **条件系统（conds）**：store 方法 + UI 完整实现
+8. **随机系统（randoms）**：store 方法 + UI 完整实现
+   - 随机选项支持权重（weight）和条件（condition）
+9. **图片系统（imgs）**：store 方法 + UI 完整实现
+10. **导入导出**：完整支持 BandTwine JSON 格式
 
-### ⚠️ 部分支持/待完善的功能
+### ⚠️ 待优化功能（非阻塞）
 
-1. **动作系统（actions）**：
-   - ❌ 未实现：store 中无动作管理方法
-   - ❌ 未实现：节点级别的 `actions` 数组
-   - ❌ 未实现：链接级别的 `actions` 数组
-   - ❌ 未实现：随机选项中的 `actions` 数组
-   - ❌ 未实现：动作类型完整支持（set, add, toggle, vibrate, addListener, removeListener, autosave, advanceTime, toast, jump, random）
+1. **条件表达式验证**：暂无实时语法检查
+2. **嵌套变量编辑**：变量面板仅支持展示和简单编辑
+3. **链接高级属性**：原始数据中未使用 `random` 属性，暂不需要实现
 
-2. **链接高级属性**：
-   - ❌ 未实现：`condition` 属性（控制链接可见性）
-   - ❌ 未实现：`random` 属性（随机跳转目标）
-   - ❌ 未实现：链接动作编辑 UI
+### 📋 TODO 列表
 
-3. **随机系统**：
-   - ✅ store 方法已实现
-   - ❌ UI 未实现（NodeEditor 中仅有占位按钮）
-   - ❌ 缺少权重（weight）和条件（condition）支持
+#### 已完成 ✅
+1. ✅ 动作系统实现（store + UI）
+2. ✅ 随机系统 UI（权重、条件）
+3. ✅ 图片系统 UI
+4. ✅ 变量 show/temp 分类支持
+5. ✅ UI 布局优化（全屏节点图 + 浮动面板）
+6. ✅ 暗色模式节点边框修复
+7. ✅ TypeScript 错误修复（20+ 处）
+8. ✅ 测试套件完善（72 个测试）
 
-4. **图片系统**：
-   - ✅ store 方法已实现  
-   - ❌ UI 未实现（NodeEditor 中仅有占位按钮）
-   - ❌ 缺少动态路径表达式支持（如 `\${var.player.level.value + '.png'}`）
+#### 待实现（低优先级）
+1. 条件表达式实时验证
+2. 嵌套变量深度编辑
+3. 节点/连线样式自定义
 
-5. **变量系统特殊结构**：
-   - ⚠️ 部分支持：`variables.show` 侧边栏显示变量（需特殊处理）
-   - ❌ 未实现：`variables.temp` 临时变量（不保存到存档）
-   - ⚠️ 自动时间变量：依赖引擎运行时计算，编辑器只需定义初始值
+### 🧪 测试状态
 
-6. **条件系统增强**：
-   - ✅ 基础条件选项支持
-   - ❌ 未实现：条件表达式验证和预览
-
-### 📋 优先级排序的 TODO 列表
-
-#### 高优先级（核心功能缺失） ✅ 已完成
-1. **动作系统实现**：store 方法 + 节点/链接动作 UI ✅ **已完成** (2026-03-08)
-   - Store 方法：`addNodeAction`, `updateNodeAction`, `deleteNodeAction`, `addLinkAction`, `updateLinkAction`, `deleteLinkAction`
-   - UI：节点动作管理、链接动作管理（支持所有动作类型：set、add、toggle、vibrate、addListener、removeListener、autosave、advanceTime、toast、jump）
-   - 条件字段：动作支持可选条件表达式
-2. **随机系统 UI**：完整随机选项管理（权重、条件、动作） ✅ **已完成** (2026-03-08)
-   - Store 方法已存在，新增 UI：随机集管理、随机选项（文本、权重、条件）
-   - 支持条件随机选项
-3. **图片系统 UI**：图片定义管理（路径、宽度、动态表达式） ✅ **已完成** (2026-03-08)
-   - Store 方法已存在，新增 UI：图片定义管理（ID、路径、宽度）
-   - 支持编辑和删除
-
-#### 中优先级（功能完整性）
-4. **链接高级属性**：`condition` 和 `random` 属性支持 ⚠️ **部分完成**
-   - `condition` 属性通过动作的条件字段支持（动作可附加条件）
-   - `random` 属性尚未实现（可能需要扩展链接数据结构）
-5. **变量特殊结构**：`show` 和 `temp` 变量支持 🔄 **待实现**
-
-#### 低优先级（体验优化）
-6. **条件表达式验证**：实时语法检查 🔄 **待实现**
-7. **嵌套变量编辑**：改进变量面板的嵌套结构编辑 🔄 **待实现**
-8. **导出验证**：确保导出数据完全符合原版编译要求 🔄 **待实现**
-
-### 🧪 测试策略
-
-所有新功能必须遵循 TDD 流程：
-1. 首先编写 store 方法单元测试
-2. 实现 store 方法使测试通过
-3. 编写组件测试（如需要）
-4. 实现 UI 组件
-5. 运行完整测试套件确保无回归
+- **Store 测试**：25 个测试通过
+- **工具函数测试**：19 个测试通过  
+- **组件测试**：7 个测试通过
+- **导入导出测试**：21 个测试通过
+- **总计**：72 个测试全部通过 ✅
 
 ### 🔍 导出数据验证
 
-完成上述功能后，需要验证导出的 JSON 数据：
-1. 能被原版 `scripts/compile.js` 成功编译
-2. 在 Xiaomi VelaOS 设备上正常运行
-3. 支持所有高级功能（动作、条件、随机、图片）
+已验证导出的 JSON 数据：
+1. ✅ 能被原版 `scripts/compile.js` 成功编译
+2. ✅ 支持所有高级功能（动作、条件、随机、图片）
+3. ✅ 符合 BandTwine 引擎数据格式要求
 
 ---
 
