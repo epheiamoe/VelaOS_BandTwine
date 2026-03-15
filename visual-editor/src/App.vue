@@ -244,34 +244,32 @@ const {
         </div>
 
         <!-- 中央节点图编辑器 - 全屏背景 -->
-        <div class="absolute inset-0 z-0">
-          <div class="h-full w-full bg-base-100 relative">
-            <!-- 面板显示控制按钮（当面板隐藏时显示） - 固定在屏幕边缘 -->
-            <div v-if="!showLeftPanel" class="fixed left-0 top-1/2 transform -translate-y-1/2 z-20" style="top: calc(50% - 2rem);">
-              <button 
-                class="btn btn-primary rounded-r-full rounded-l-none shadow-lg py-2"
-                @click="showLeftPanel = true"
-                title="显示工具窗口"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                </svg>
-              </button>
-            </div>
-            <div v-if="!showRightPanel" class="fixed right-0 top-1/2 transform -translate-y-1/2 z-20" style="top: calc(50% - 2rem);">
-              <button 
-                class="btn btn-primary rounded-l-full rounded-r-none shadow-lg py-2"
-                @click="showRightPanel = true"
-                title="显示属性窗口"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                </svg>
-              </button>
-            </div>
-            <div class="h-full w-full p-0 overflow-hidden">
-              <NodeGraph class="!h-full !w-full" />
-            </div>
+        <div class="absolute inset-0 z-0 bg-base-100">
+          <!-- 面板显示控制按钮（当面板隐藏时显示） - 固定在屏幕边缘 -->
+          <div v-if="!showLeftPanel" class="fixed left-0 top-1/2 transform -translate-y-1/2 z-20" style="top: calc(50% - 2rem);">
+            <button 
+              class="btn btn-primary rounded-r-full rounded-l-none shadow-lg py-2"
+              @click="showLeftPanel = true"
+              title="显示工具窗口"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+            </button>
+          </div>
+          <div v-if="!showRightPanel" class="fixed right-0 top-1/2 transform -translate-y-1/2 z-20" style="top: calc(50% - 2rem);">
+            <button 
+              class="btn btn-primary rounded-l-full rounded-r-none shadow-lg py-2"
+              @click="showRightPanel = true"
+              title="显示属性窗口"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+              </svg>
+            </button>
+          </div>
+          <div class="h-full w-full p-0 overflow-hidden">
+            <NodeGraph class="!h-full !w-full" />
           </div>
         </div>
 
