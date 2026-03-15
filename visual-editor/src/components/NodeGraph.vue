@@ -84,7 +84,7 @@ watch(
 </script>
 
 <template>
-  <div class="w-full h-full bg-base-300 rounded-lg">
+  <div class="w-full h-full bg-base-300 rounded-lg vue-flow-wrapper">
     <VueFlow 
       :nodes="nodes"
       :edges="edges"
