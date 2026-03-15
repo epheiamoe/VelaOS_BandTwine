@@ -219,9 +219,9 @@ const updateIndexNode = (nodeId: string) => {
               <span>当前起始节点：</span>
               <span class="font-bold">{{ metadata.indexNode }}</span>
             </div>
-            <div class="text-sm mt-1 opacity-75">
-              {{ editorStore.storyData.nodes[metadata.indexNode].text.substring(0, 100) }}
-              {{ editorStore.storyData.nodes[metadata.indexNode].text.length > 100 ? '...' : '' }}
+             <div class="text-sm mt-1 opacity-75">
+              {{ editorStore.storyData.nodes[metadata.indexNode]?.text?.substring(0, 100) }}
+              {{ (editorStore.storyData.nodes[metadata.indexNode]?.text?.length || 0) > 100 ? '...' : '' }}
             </div>
           </div>
         </div>

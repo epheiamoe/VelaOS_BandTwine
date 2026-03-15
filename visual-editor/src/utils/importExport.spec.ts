@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import {
   validateStoryData,
   exportToBandTwineJSON,
@@ -170,7 +170,7 @@ describe('importExport utilities', () => {
       const imported = importFromBandTwineJSON(jsonString)
       
       expect(imported.metadata.title).toBe('测试故事')
-      expect(imported.nodes.start.text).toBe('起始节点')
+      expect(imported.nodes.start?.text).toBe('起始节点')
     })
 
     it('should throw error for invalid JSON', () => {

@@ -11,9 +11,22 @@ import MetadataEditor from '@/components/MetadataEditor.vue'
 const editorStore = useEditorStore()
 const activeTab = ref<'nodes' | 'variables' | 'metadata'>('nodes')
 
+// 文件上传引用
+const fileUploadRef = ref<HTMLInputElement>()
+const projectUploadRef = ref<HTMLInputElement>()
+
 // 面板显示状态
 const showLeftPanel = ref(true)
 const showRightPanel = ref(true)
+
+// 触发文件上传点击
+const triggerFileUpload = () => {
+  fileUploadRef.value?.click()
+}
+
+const triggerProjectUpload = () => {
+  projectUploadRef.value?.click()
+}
 
 // 从localStorage加载面板状态
 onMounted(() => {
@@ -90,6 +103,7 @@ const {
         <input
           type="file"
           id="file-upload"
+          ref="fileUploadRef"
           class="hidden"
           accept=".json,.bandtwine"
           @change="handleFileUpload($event, false)"
@@ -97,6 +111,7 @@ const {
         <input
           type="file"
           id="project-upload"
+          ref="projectUploadRef"
           class="hidden"
           accept=".bandtwine,.json"
           @change="handleFileUpload($event, true)"
@@ -124,8 +139,8 @@ const {
             导入
           </div>
           <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 z-10">
-            <li><a @click="document.getElementById('file-upload').click()">导入 JSON 文件</a></li>
-            <li><a @click="document.getElementById('project-upload').click()">导入项目文件</a></li>
+            <li><a @click="triggerFileUpload">导入 JSON 文件</a></li>
+            <li><a @click="triggerProjectUpload">导入项目文件</a></li>
             <li><a @click="importFromClipboard">从剪贴板导入</a></li>
             <li><a @click="loadSampleData">加载示例数据</a></li>
           </ul>
@@ -170,12 +185,12 @@ const {
 
     <!-- 主内容区 -->
     <main class="container mx-auto p-4 pb-10">
-      <!-- 节点编辑视图 -->
-      <div v-if="activeTab === 'nodes'" class="grid grid-cols-12 gap-4">
-        <!-- 左侧工具栏 -->
-        <div :class="showLeftPanel ? 'col-span-2' : 'col-span-0 hidden'">
-          <div class="card bg-base-200 shadow h-full">
-            <div class="card-body p-4">
+      <!-- 节点编辑视图 - 全屏模式 -->
+      <div v-if="activeTab === 'nodes'" class="fixed inset-0" style="top: 4rem; bottom: 0;">
+        <!-- 左侧工具栏 - 浮动窗口 -->
+        <div v-if="showLeftPanel" class="fixed left-4 top-20 w-80 max-h-[70vh] z-30 shadow-2xl rounded-lg overflow-hidden">
+          <div class="card bg-base-200 h-full">
+            <div class="card-body p-4 overflow-y-auto">
               <div class="flex items-center justify-between mb-3">
                 <h3 class="card-title text-sm">工具</h3>
                 <button 
@@ -228,30 +243,26 @@ const {
           </div>
         </div>
 
-        <!-- 中央节点图编辑器 -->
-        <div :class="[
-          !showLeftPanel && !showRightPanel ? 'col-span-12' : 
-          !showLeftPanel && showRightPanel ? 'col-span-9' :
-          showLeftPanel && !showRightPanel ? 'col-span-10' : 'col-span-7'
-        ]">
-          <div class="card bg-base-200 shadow h-full relative">
-            <!-- 面板显示控制按钮（当面板隐藏时显示） -->
-            <div v-if="!showLeftPanel" class="absolute left-0 top-4 z-10">
+        <!-- 中央节点图编辑器 - 全屏背景 -->
+        <div class="absolute inset-0 z-0">
+          <div class="h-full w-full bg-base-100 relative">
+            <!-- 面板显示控制按钮（当面板隐藏时显示） - 固定在屏幕边缘 -->
+            <div v-if="!showLeftPanel" class="fixed left-0 top-1/2 transform -translate-y-1/2 z-20">
               <button 
-                class="btn btn-xs btn-primary rounded-r-full rounded-l-none shadow-lg"
+                class="btn btn-primary rounded-r-full rounded-l-none shadow-lg py-2"
                 @click="showLeftPanel = true"
-                title="显示左侧面板"
+                title="显示工具窗口"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                 </svg>
               </button>
             </div>
-            <div v-if="!showRightPanel" class="absolute right-0 top-4 z-10">
+            <div v-if="!showRightPanel" class="fixed right-0 top-1/2 transform -translate-y-1/2 z-20">
               <button 
-                class="btn btn-xs btn-primary rounded-l-full rounded-r-none shadow-lg"
+                class="btn btn-primary rounded-l-full rounded-r-none shadow-lg py-2"
                 @click="showRightPanel = true"
-                title="显示右侧面板"
+                title="显示属性窗口"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
@@ -264,10 +275,10 @@ const {
           </div>
         </div>
 
-        <!-- 右侧属性编辑器 -->
-        <div :class="showRightPanel ? 'col-span-3' : 'col-span-0 hidden'">
-          <div class="card bg-base-200 shadow h-full">
-            <div class="card-body p-4">
+        <!-- 右侧属性编辑器 - 浮动窗口 -->
+        <div v-if="showRightPanel" class="fixed right-4 top-20 w-96 max-h-[80vh] z-30 shadow-2xl rounded-lg overflow-hidden">
+          <div class="card bg-base-200 h-full">
+            <div class="card-body p-4 overflow-y-auto">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="card-title text-sm">
                   节点属性
@@ -312,7 +323,7 @@ const {
     </main>
 
     <!-- 底部状态栏 -->
-    <footer class="sticky bottom-0 left-0 right-0 bg-base-200 border-t border-base-300 p-2 text-xs z-10">
+    <footer class="fixed bottom-0 left-0 right-0 bg-base-200 border-t border-base-300 p-2 text-xs z-10">
       <div class="container mx-auto flex justify-between items-center">
         <div>
           项目: {{ editorStore.storyData.metadata.title }}

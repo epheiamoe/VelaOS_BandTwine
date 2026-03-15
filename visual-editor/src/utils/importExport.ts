@@ -73,7 +73,7 @@ export function exportToBandTwineJSON(storyData: StoryData): string {
   // 移除每个节点中的 segments 字段（由编译脚本生成）
   for (const nodeId in exportData.nodes) {
     const node = exportData.nodes[nodeId]
-    if (node.segments) {
+    if (node?.segments) {
       delete node.segments
     }
   }
@@ -211,7 +211,7 @@ export function generateSampleStoryData(): StoryData {
       author: 'BandTwine 编辑器',
       version: '1.0.0',
       versionCode: 1,
-      releaseDate: new Date().toISOString().split('T')[0],
+      releaseDate: new Date().toISOString().split('T')[0] || '',
       license: 'CC-0',
       copyright: 'Copyright © 2025 BandTwine',
       indexNode: 'start'

@@ -35,14 +35,11 @@ describe('NodeGraph', () => {
 
   it('updates node positions on drag stop', async () => {
     const store = useEditorStore()
-    const wrapper = mount(NodeGraph)
     
     // 模拟节点拖拽停止事件
     const nodeId = 'start'
     const newPosition = { x: 500, y: 300 }
     
-    // 触发 onNodeDragStop 回调
-    const vueFlow = wrapper.getComponent({ name: 'VueFlow' })
     // Vue Flow 的事件系统复杂，我们直接测试 store 的响应性
     // 直接调用 store 的 nodePositions 更新
     store.nodePositions[nodeId] = newPosition

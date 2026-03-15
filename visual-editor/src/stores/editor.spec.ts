@@ -24,7 +24,7 @@ describe('editor store', () => {
     
     expect(Object.keys(store.storyData.nodes)).toHaveLength(initialNodeCount + 1)
     expect(store.storyData.nodes[newNodeId]).toBeDefined()
-    expect(store.storyData.nodes[newNodeId].text).toBe('新节点')
+    expect(store.storyData.nodes[newNodeId]?.text).toBe('新节点')
     expect(store.selectedNodeId).toBe(newNodeId)
   })
 
@@ -34,7 +34,7 @@ describe('editor store', () => {
     
     store.updateNode('start', { text: newNodeText })
     
-    expect(store.storyData.nodes.start.text).toBe(newNodeText)
+    expect(store.storyData.nodes.start?.text).toBe(newNodeText)
   })
 
   it('should add link between nodes', () => {
@@ -44,9 +44,9 @@ describe('editor store', () => {
     store.addLink('start', targetNodeId, '前往新节点')
     
     const startNode = store.storyData.nodes.start
-    expect(startNode.links).toHaveLength(1)
-    expect(startNode.links[0].target).toBe(targetNodeId)
-    expect(startNode.links[0].text).toBe('前往新节点')
+    expect(startNode?.links).toHaveLength(1)
+    expect(startNode?.links[0]?.target).toBe(targetNodeId)
+    expect(startNode?.links[0]?.text).toBe('前往新节点')
   })
 
   it('should delete node', () => {
@@ -142,8 +142,8 @@ describe('editor store', () => {
       // 假设 store 有 addConditionOption 方法
       store.addConditionOption(nodeId, conditionId, option)
 
-      expect(store.storyData.nodes[nodeId].conds?.[conditionId]).toHaveLength(1)
-      expect(store.storyData.nodes[nodeId].conds?.[conditionId]?.[0]).toEqual(option)
+      expect(store.storyData.nodes[nodeId]?.conds?.[conditionId]).toHaveLength(1)
+      expect(store.storyData.nodes[nodeId]?.conds?.[conditionId]?.[0]).toEqual(option)
     })
 
     it('should update condition option', () => {
@@ -159,8 +159,8 @@ describe('editor store', () => {
       const updates = { text: '更新后的选项' }
       store.updateConditionOption(nodeId, conditionId, 0, updates)
 
-      expect(store.storyData.nodes[nodeId].conds?.[conditionId]?.[0].text).toBe('更新后的选项')
-      expect(store.storyData.nodes[nodeId].conds?.[conditionId]?.[0].condition).toBe('var.world.time > 480')
+      expect(store.storyData.nodes[nodeId]?.conds?.[conditionId]?.[0]?.text).toBe('更新后的选项')
+      expect(store.storyData.nodes[nodeId]?.conds?.[conditionId]?.[0]?.condition).toBe('var.world.time > 480')
     })
 
     it('should delete condition option', () => {
@@ -172,11 +172,11 @@ describe('editor store', () => {
         text: '早晨选项'
       }
       store.addConditionOption(nodeId, conditionId, option)
-      expect(store.storyData.nodes[nodeId].conds?.[conditionId]).toHaveLength(1)
+      expect(store.storyData.nodes[nodeId]?.conds?.[conditionId]).toHaveLength(1)
 
       store.deleteConditionOption(nodeId, conditionId, 0)
 
-      expect(store.storyData.nodes[nodeId].conds?.[conditionId]).toHaveLength(0)
+      expect(store.storyData.nodes[nodeId]?.conds?.[conditionId]).toHaveLength(0)
     })
   })
 
@@ -192,8 +192,8 @@ describe('editor store', () => {
 
       store.addRandomOption(nodeId, randomId, option)
 
-      expect(store.storyData.nodes[nodeId].randoms?.[randomId]).toHaveLength(1)
-      expect(store.storyData.nodes[nodeId].randoms?.[randomId]?.[0]).toEqual(option)
+      expect(store.storyData.nodes[nodeId]?.randoms?.[randomId]).toHaveLength(1)
+      expect(store.storyData.nodes[nodeId]?.randoms?.[randomId]?.[0]).toEqual(option)
     })
 
     it('should update random option', () => {
@@ -209,8 +209,8 @@ describe('editor store', () => {
       store.addRandomOption(nodeId, randomId, option)
       store.updateRandomOption(nodeId, randomId, 0, updates)
 
-      expect(store.storyData.nodes[nodeId].randoms?.[randomId]?.[0].text).toBe('更新后的随机选项')
-      expect(store.storyData.nodes[nodeId].randoms?.[randomId]?.[0].weight).toBe(1)
+      expect(store.storyData.nodes[nodeId]?.randoms?.[randomId]?.[0]?.text).toBe('更新后的随机选项')
+      expect(store.storyData.nodes[nodeId]?.randoms?.[randomId]?.[0]?.weight).toBe(1)
     })
 
     it('should delete random option', () => {
@@ -223,11 +223,11 @@ describe('editor store', () => {
       }
 
       store.addRandomOption(nodeId, randomId, option)
-      expect(store.storyData.nodes[nodeId].randoms?.[randomId]).toHaveLength(1)
+      expect(store.storyData.nodes[nodeId]?.randoms?.[randomId]).toHaveLength(1)
 
       store.deleteRandomOption(nodeId, randomId, 0)
 
-      expect(store.storyData.nodes[nodeId].randoms?.[randomId]).toHaveLength(0)
+      expect(store.storyData.nodes[nodeId]?.randoms?.[randomId]).toHaveLength(0)
     })
   })
 
@@ -243,7 +243,7 @@ describe('editor store', () => {
 
       store.addImageDef(nodeId, imageId, def)
 
-      expect(store.storyData.nodes[nodeId].imgs?.[imageId]).toEqual(def)
+      expect(store.storyData.nodes[nodeId]?.imgs?.[imageId]).toEqual(def)
     })
 
     it('should update image definition', () => {
@@ -259,8 +259,8 @@ describe('editor store', () => {
       store.addImageDef(nodeId, imageId, def)
       store.updateImageDef(nodeId, imageId, updates)
 
-      expect(store.storyData.nodes[nodeId].imgs?.[imageId].path).toBe('backgrounds/forest.png')
-      expect(store.storyData.nodes[nodeId].imgs?.[imageId].width).toBe(300)
+      expect(store.storyData.nodes[nodeId]?.imgs?.[imageId]?.path).toBe('backgrounds/forest.png')
+      expect(store.storyData.nodes[nodeId]?.imgs?.[imageId]?.width).toBe(300)
     })
 
     it('should delete image definition', () => {
@@ -273,11 +273,11 @@ describe('editor store', () => {
       }
 
       store.addImageDef(nodeId, imageId, def)
-      expect(store.storyData.nodes[nodeId].imgs?.[imageId]).toBeDefined()
+      expect(store.storyData.nodes[nodeId]?.imgs?.[imageId]).toBeDefined()
 
       store.deleteImageDef(nodeId, imageId)
 
-      expect(store.storyData.nodes[nodeId].imgs?.[imageId]).toBeUndefined()
+      expect(store.storyData.nodes[nodeId]?.imgs?.[imageId]).toBeUndefined()
     })
   })
 
@@ -294,8 +294,8 @@ describe('editor store', () => {
       // 假设有 addNodeAction 方法
       store.addNodeAction(nodeId, action)
 
-      expect(store.storyData.nodes[nodeId].actions).toHaveLength(1)
-      expect(store.storyData.nodes[nodeId].actions?.[0]).toEqual(action)
+      expect(store.storyData.nodes[nodeId]?.actions).toHaveLength(1)
+      expect(store.storyData.nodes[nodeId]?.actions?.[0]).toEqual(action)
     })
 
     it('should add action to link', () => {
@@ -314,8 +314,8 @@ describe('editor store', () => {
       store.addLinkAction(nodeId, 0, action)
 
       const node = store.storyData.nodes[nodeId]
-      expect(node.links[0].actions).toHaveLength(1)
-      expect(node.links[0].actions?.[0]).toEqual(action)
+      expect(node?.links[0]?.actions).toHaveLength(1)
+      expect(node?.links[0]?.actions?.[0]).toEqual(action)
     })
 
     it('should update node action', () => {
@@ -333,9 +333,9 @@ describe('editor store', () => {
       // 假设有 updateNodeAction 方法
       store.updateNodeAction(nodeId, 0, updates)
 
-      expect(store.storyData.nodes[nodeId].actions?.[0].value).toBe(150)
-      expect(store.storyData.nodes[nodeId].actions?.[0].type).toBe('set')
-      expect(store.storyData.nodes[nodeId].actions?.[0].target).toBe('var.player.health')
+      expect(store.storyData.nodes[nodeId]?.actions?.[0]?.value).toBe(150)
+      expect(store.storyData.nodes[nodeId]?.actions?.[0]?.type).toBe('set')
+      expect(store.storyData.nodes[nodeId]?.actions?.[0]?.target).toBe('var.player.health')
     })
 
     it('should update link action', () => {
@@ -356,9 +356,9 @@ describe('editor store', () => {
       store.updateLinkAction(nodeId, 0, 0, updates)
 
       const node = store.storyData.nodes[nodeId]
-      expect(node.links[0].actions?.[0].value).toBe(100)
-      expect(node.links[0].actions?.[0].type).toBe('add')
-      expect(node.links[0].actions?.[0].target).toBe('var.player.gold')
+      expect(node?.links[0]?.actions?.[0]?.value).toBe(100)
+      expect(node?.links[0]?.actions?.[0]?.type).toBe('add')
+      expect(node?.links[0]?.actions?.[0]?.target).toBe('var.player.gold')
     })
 
     it('should delete node action', () => {
@@ -371,12 +371,12 @@ describe('editor store', () => {
       }
       
       store.addNodeAction(nodeId, action)
-      expect(store.storyData.nodes[nodeId].actions).toHaveLength(1)
+      expect(store.storyData.nodes[nodeId]?.actions).toHaveLength(1)
 
       // 假设有 deleteNodeAction 方法
       store.deleteNodeAction(nodeId, 0)
 
-      expect(store.storyData.nodes[nodeId].actions).toHaveLength(0)
+      expect(store.storyData.nodes[nodeId]?.actions).toHaveLength(0)
     })
 
     it('should delete link action', () => {
@@ -392,12 +392,12 @@ describe('editor store', () => {
       
       store.addLinkAction(nodeId, 0, action)
       const node = store.storyData.nodes[nodeId]
-      expect(node.links[0].actions).toHaveLength(1)
+      expect(node?.links[0]?.actions).toHaveLength(1)
 
       // 假设有 deleteLinkAction 方法
       store.deleteLinkAction(nodeId, 0, 0)
 
-      expect(node.links[0].actions).toHaveLength(0)
+      expect(node?.links[0]?.actions).toHaveLength(0)
     })
   })
 })

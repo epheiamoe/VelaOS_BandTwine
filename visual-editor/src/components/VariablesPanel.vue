@@ -4,6 +4,16 @@ import { ref } from 'vue'
 
 const editorStore = useEditorStore()
 
+interface VariableItem {
+  type: 'variable' | 'group'
+  key: string
+  path: string
+  value?: any
+  desc?: string
+  level: number
+  children?: VariableItem[]
+}
+
 // 新变量表单
 const newVarPath = ref('')
 const newVarValue = ref('')
@@ -25,8 +35,8 @@ const addVariable = () => {
 }
 
 // 递归渲染变量树
-const renderVariables = (obj: any, path: string = '', level: number = 0) => {
-  const items = []
+const renderVariables = (obj: any, path: string = '', level: number = 0): VariableItem[] => {
+  const items: VariableItem[] = []
   
   for (const key in obj) {
     if (!obj.hasOwnProperty(key)) continue
@@ -278,7 +288,7 @@ const getVariableValue = (path: string) => {
               </div>
               
               <div v-if="item.type === 'group'" class="collapse-content">
-                <div v-if="item.children.length === 0" class="text-base-content/50 text-sm p-2">
+                <div v-if="!item.children || item.children.length === 0" class="text-base-content/50 text-sm p-2">
                   空文件夹
                 </div>
                 <div v-else>
@@ -376,7 +386,7 @@ const getVariableValue = (path: string) => {
               </div>
               
               <div v-if="item.type === 'group'" class="collapse-content">
-                <div v-if="item.children.length === 0" class="text-base-content/50 text-sm p-2">
+                <div v-if="!item.children || item.children.length === 0" class="text-base-content/50 text-sm p-2">
                   空文件夹
                 </div>
                 <div v-else>
@@ -474,7 +484,7 @@ const getVariableValue = (path: string) => {
               </div>
               
               <div v-if="item.type === 'group'" class="collapse-content">
-                <div v-if="item.children.length === 0" class="text-base-content/50 text-sm p-2">
+                <div v-if="!item.children || item.children.length === 0" class="text-base-content/50 text-sm p-2">
                   空文件夹
                 </div>
                 <div v-else>

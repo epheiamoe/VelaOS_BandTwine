@@ -65,7 +65,7 @@ describe('compiler', () => {
 
     it('generates unique tid', () => {
       const result = compileText('Hello {var.x} world', 'n1')
-      expect(result[1].tid).toBe('n1-variable-1')
+      expect(result[1]?.tid).toBe('n1-variable-1')
     })
   })
 

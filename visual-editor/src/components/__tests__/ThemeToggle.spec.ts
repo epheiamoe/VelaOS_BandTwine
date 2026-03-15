@@ -9,15 +9,15 @@ describe('ThemeToggle', () => {
   })
 
   it('renders correctly', () => {
-    const wrapper = mount(ThemeToggle)
+    const _wrapper = mount(ThemeToggle)
     
-    expect(wrapper.find('button').exists()).toBe(true)
-    expect(wrapper.find('svg').exists()).toBe(true)
+    expect(_wrapper.find('button').exists()).toBe(true)
+    expect(_wrapper.find('svg').exists()).toBe(true)
   })
 
   it('toggles theme on click', async () => {
-    const wrapper = mount(ThemeToggle)
-    const button = wrapper.find('button')
+    const _wrapper = mount(ThemeToggle)
+    const button = _wrapper.find('button')
     
     // 初始应为 light 主题
     expect(document.documentElement.getAttribute('data-theme')).toBe('light')
@@ -51,7 +51,7 @@ describe('ThemeToggle', () => {
       })),
     })
     
-    const wrapper = mount(ThemeToggle)
+    mount(ThemeToggle)
     
     // 应该设置为 dark 主题
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark')

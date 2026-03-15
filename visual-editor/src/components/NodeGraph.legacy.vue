@@ -3,7 +3,6 @@ import { useEditorStore } from '@/stores/editor'
 import { ref, onMounted } from 'vue'
 
 const editorStore = useEditorStore()
-const containerRef = ref<HTMLElement>()
 
 // 简单的节点图实现（后续将替换为 Vue Flow）
 const draggingNode = ref<string | null>(null)
@@ -56,7 +55,6 @@ onMounted(() => {
 
 <template>
   <div 
-    ref="containerRef"
     class="w-full h-[600px] bg-base-300 relative overflow-auto"
     @click="editorStore.selectedNodeId = null"
   >
@@ -79,7 +77,7 @@ onMounted(() => {
         <path
           v-for="link in editorStore.visualLinks"
           :key="link.id"
-          :d="`M ${editorStore.nodePositions[link.source].x + 100} ${editorStore.nodePositions[link.source].y + 25} L ${editorStore.nodePositions[link.target].x} ${editorStore.nodePositions[link.target].y + 25}`"
+          :d="`M ${(editorStore.nodePositions[link.source]?.x || 0) + 100} ${(editorStore.nodePositions[link.source]?.y || 0) + 25} L ${editorStore.nodePositions[link.target]?.x || 0} ${(editorStore.nodePositions[link.target]?.y || 0) + 25}`"
           stroke="oklch(var(--bc))"
           stroke-width="2"
           fill="none"
@@ -102,9 +100,9 @@ onMounted(() => {
           ? 'bg-gradient-to-br from-primary/20 to-primary/5 border-2 border-primary/30'
           : 'bg-base-100'
       ]"
-      :style="{
-        left: `${editorStore.nodePositions[node.id].x}px`,
-        top: `${editorStore.nodePositions[node.id].y}px`
+       :style="{
+        left: `${editorStore.nodePositions[node.id]?.x || 0}px`,
+        top: `${editorStore.nodePositions[node.id]?.y || 0}px`
       }"
       @mousedown="handleNodeMouseDown(node.id, $event)"
       @click.stop="editorStore.selectedNodeId = node.id"

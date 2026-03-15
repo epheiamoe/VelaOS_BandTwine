@@ -7,10 +7,8 @@ import {
   importProjectFile,
   downloadFile,
   readUploadedFile,
-  generateSampleStoryData,
-  validateStoryData
+  generateSampleStoryData
 } from '@/utils/importExport'
-import type { StoryData } from '@/types'
 
 export function useImportExport() {
   const editorStore = useEditorStore()
@@ -95,9 +93,12 @@ export function useImportExport() {
    */
   const handleFileUpload = (event: Event, isProjectFile: boolean = false) => {
     const input = event.target as HTMLInputElement
-    if (!input.files || input.files.length === 0) return
+    const files = input.files
+    if (!files || files.length === 0) return
 
-    const file = input.files[0]
+    const file = files[0]
+    if (!file) return
+
     const fileExtension = file.name.split('.').pop()?.toLowerCase()
 
     // 检查文件类型
