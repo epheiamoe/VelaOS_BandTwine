@@ -184,13 +184,13 @@ const {
     </div>
 
     <!-- 主内容区 -->
-    <main class="container mx-auto p-4 pb-10">
+    <main class="min-h-screen" style="padding-bottom: 0; margin-bottom: 0;">
       <!-- 节点编辑视图 - 全屏模式 -->
-      <div v-if="activeTab === 'nodes'" class="fixed inset-0" style="top: 4rem; bottom: 0;">
+      <div v-if="activeTab === 'nodes'" class="fixed inset-0" style="top: 4rem; bottom: 2rem; left: 0; right: 0;">
         <!-- 左侧工具栏 - 浮动窗口 -->
-        <div v-if="showLeftPanel" class="fixed left-4 top-20 w-80 max-h-[70vh] z-30 shadow-2xl rounded-lg overflow-hidden">
+        <div v-if="showLeftPanel" class="fixed left-4 top-20 bottom-24 w-80 z-30 shadow-2xl rounded-lg overflow-hidden">
           <div class="card bg-base-200 h-full">
-            <div class="card-body p-4 overflow-y-auto">
+            <div class="card-body p-4 overflow-y-auto" style="max-height: calc(100vh - 8rem);">
               <div class="flex items-center justify-between mb-3">
                 <h3 class="card-title text-sm">工具</h3>
                 <button 
@@ -247,7 +247,7 @@ const {
         <div class="absolute inset-0 z-0">
           <div class="h-full w-full bg-base-100 relative">
             <!-- 面板显示控制按钮（当面板隐藏时显示） - 固定在屏幕边缘 -->
-            <div v-if="!showLeftPanel" class="fixed left-0 top-1/2 transform -translate-y-1/2 z-20">
+            <div v-if="!showLeftPanel" class="fixed left-0 top-1/2 transform -translate-y-1/2 z-20" style="top: calc(50% - 2rem);">
               <button 
                 class="btn btn-primary rounded-r-full rounded-l-none shadow-lg py-2"
                 @click="showLeftPanel = true"
@@ -258,7 +258,7 @@ const {
                 </svg>
               </button>
             </div>
-            <div v-if="!showRightPanel" class="fixed right-0 top-1/2 transform -translate-y-1/2 z-20">
+            <div v-if="!showRightPanel" class="fixed right-0 top-1/2 transform -translate-y-1/2 z-20" style="top: calc(50% - 2rem);">
               <button 
                 class="btn btn-primary rounded-l-full rounded-r-none shadow-lg py-2"
                 @click="showRightPanel = true"
@@ -269,16 +269,16 @@ const {
                 </svg>
               </button>
             </div>
-            <div class="card-body p-0 overflow-hidden">
-              <NodeGraph />
+            <div class="h-full w-full p-0 overflow-hidden">
+              <NodeGraph class="!h-full !w-full" />
             </div>
           </div>
         </div>
 
         <!-- 右侧属性编辑器 - 浮动窗口 -->
-        <div v-if="showRightPanel" class="fixed right-4 top-20 w-96 max-h-[80vh] z-30 shadow-2xl rounded-lg overflow-hidden">
-          <div class="card bg-base-200 h-full">
-            <div class="card-body p-4 overflow-y-auto">
+        <div v-if="showRightPanel" class="fixed right-4 top-20 bottom-24 w-96 z-30 shadow-2xl rounded-lg overflow-hidden">
+          <div class="card bg-base-200 h-full overflow-hidden">
+            <div class="card-body p-4 overflow-y-auto" style="max-height: calc(100vh - 8rem);">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="card-title text-sm">
                   节点属性

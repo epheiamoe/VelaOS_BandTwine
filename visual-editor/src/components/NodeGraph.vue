@@ -84,7 +84,7 @@ watch(
 </script>
 
 <template>
-  <div class="w-full h-[600px] bg-base-300 rounded-lg">
+  <div class="w-full h-full bg-base-300 rounded-lg">
     <VueFlow 
       :nodes="nodes"
       :edges="edges"
@@ -95,7 +95,7 @@ watch(
       :zoom-on-scroll="true"
       :pan-on-drag="true"
       :fit-view-on-init="false"
-      class="vue-flow__container"
+      class="!h-full !w-full vue-flow__container"
       @pane-click="editorStore.selectedNodeId = null"
     >
       <!-- 自定义节点模板 -->
